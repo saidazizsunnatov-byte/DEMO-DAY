@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blookhit 3D - Viktorina & Arena O'yini</title>
+    <meta name="description" content="Blookhit 3D - Blooket uslubidagi 3D formatdagi intellektual viktorina o'yini. QR kod skaneri bilan kameradan darhol xonaga kiring, 3D arenada oltinlar yig'ing va do'stlaringiz bilan bellashing!">
+    <meta name="keywords" content="Blooket, Blookhit, 3D oyin, QR skaner, viktorina, Three.js, quiz oyin">
+    
+    <!-- Tashqi Barqaror CDN Kutubxonalari -->
+    <!-- Three.js (3D Grafika uchun) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- QRCode.js (Host QR yaratish) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- HTML5-QRCode (Kamera orqali jonli QR skaner) -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- Canvas Confetti (G'oliblik feyerverki) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dinamik Fon Effektlari -->
+    <div class="bg-animated-decor">
+        <div class="floating-blooks-decor">
+            <span class="float-blook b1">🐉</span>
+            <span class="float-blook b2">🤖</span>
+            <span class="float-blook b3">🧙‍♂️</span>
+            <span class="float-blook b4">🐱</span>
+            <span class="float-blook b5">🐻</span>
+        </div>
+    </div>
+
+    <!-- 1. ASOSIY BOSH SAHIFA (HOME SCREEN) -->
+    <section id="home-screen" class="screen active">
+        <header class="top-header">
+            <div class="brand-logo">
+                <span>BLOOKHIT</span>
+                <span class="logo-badge">3D EDITION</span>
+            </div>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                <button id="btn-open-quick-qr" class="btn-neo btn-gold" title="O'yin QR kodini chiqarish">
+                    📱 QR Kod Chiqarish
+                </button>
+                <button id="btn-open-add-q" class="btn-neo btn-purple" title="Yangi savol qo'shish">
+                    ➕ Savol Qo'shish
+                </button>
+            </div>
+        </header>
+
+        <main class="home-hero-container">
+            <div class="hero-title-box">
+                <h1 class="hero-title">BLOOKHIT 3D ARENA</h1>
+                <p class="hero-subtitle">Savollarga javob bering, 3D arenada sandiqlarni oching va oltinlarni to'plang!</p>
+            </div>
+
+            <!-- Boshqaruv kartochkalari -->
+            <div class="hero-action-cards">
+                <!-- 1. QR Skaner orqali kirish -->
+                <div class="action-card">
+                    <div class="action-icon">📷</div>
+                    <h3>QR Skaner</h3>
+                    <p>Kamera orqali o'yin QR kodini skaner qilib bir zumda kiring!</p>
+                    <button id="btn-home-scan" class="btn-neo btn-primary btn-large" style="width: 100%;">
+                        🔍 Skaner Bilan Kirish
+                    </button>
+                </div>
+
+                <!-- 2. PIN Kod orqali kirish -->
+                <div class="action-card">
+                    <div class="action-icon">🔢</div>
+                    <h3>PIN Bilan Kirish</h3>
+                    <p>O'yin xonasi PIN kodini kiritib jangga qo'shiling</p>
+                    <button id="btn-home-join" class="btn-neo btn-green btn-large" style="width: 100%;">
+                        🎮 Xonaga Qo'shilish
+                    </button>
+                </div>
+
+                <!-- 3. Xona Yaratish (Host) -->
+                <div class="action-card">
+                    <div class="action-icon">👑</div>
+                    <h3>Xona Yaratish (Host)</h3>
+                    <p>Katta QR kod va PIN chiqarib, boshqa o'yinchilarni taklif qiling</p>
+                    <button id="btn-home-host" class="btn-neo btn-gold btn-large" style="width: 100%;">
+                        ⭐ Xona Ochish (Host)
+                    </button>
+                </div>
+            </div>
+
+            <!-- JONLI TEZKOR QR KOD BANNERI (Doimo ko'rinib turadi) -->
+            <div class="home-qr-banner-card">
+                <div class="qr-banner-left">
+                    <span class="qr-badge">⚡ TEZKOR O'YIN QR KODI</span>
+                    <h2>📱 QR Kodni Skaner Qiling</h2>
+                    <p>Telefon kamerangizni ushbu QR kodga to'g'irlang va bir zumda o'yinga ulaning!</p>
+                    <div class="qr-banner-pin-box">
+                        <span>PIN:</span>
+                        <strong id="home-qr-pin">842109</strong>
+                        <button id="btn-home-refresh-qr" class="btn-neo btn-primary" style="padding: 0.5rem 1rem; font-size: 0.95rem;">
+                            🔄 Yangilash
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap;">
+                        <button id="btn-home-download-qr" class="btn-neo btn-green">
+                            💾 QR Yuklab Olish (PNG)
+                        </button>
+                        <button id="btn-home-fullscreen-qr" class="btn-neo btn-purple">
+                            🔍 Katta Ekranda Ko'rish
+                        </button>
+                    </div>
+                </div>
+                <div class="qr-banner-right">
+                    <div class="qr-code-frame" style="margin: 0;">
+                        <div id="home-qr-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personaj (Blook) tanlash bloki -->
+            <div class="blook-locker-section">
+                <div class="locker-header">
+                    <h3>🎭 Blook Personajingizni Tanlang</h3>
+                    <span style="color: var(--text-muted); font-size: 0.95rem;">3D maydonda ushbu qahramon bilan yugurasiz</span>
+                </div>
+                <div id="blook-grid-home" class="blook-grid"></div>
+            </div>
+
+            <!-- Yakkaxon o'ynash (Solo) -->
+            <button id="btn-home-solo" class="btn-neo btn-primary btn-large" style="margin-bottom: 2rem;">
+                ⚡ Yakkama-Yakka Botlar Bilan O'ynash (Solo)
+            </button>
+        </main>
+    </section>
+
+    <!-- 2. QR KAMERA SKANERI EKRANI (SCANNER SCREEN) -->
+    <section id="scanner-screen" class="screen">
+        <header class="top-header">
+            <button class="btn-neo btn-red btn-back">⬅ Ortga</button>
+            <div class="brand-logo">
+                <span>📷 O'YIN SKANERI</span>
+            </div>
+            <div style="width: 80px;"></div>
+        </header>
+
+        <main class="scanner-container">
+            <h2>Kamera Orqali QR Kodni Skanerlang</h2>
+            <p id="scanner-status" style="color: var(--accent-gold); font-weight: 700; margin-top: 0.5rem;">
+                Kameraga o'yin QR kodini tuting...
+            </p>
+
+            <div class="scanner-box">
+                <div class="scanner-laser"></div>
+                <div class="scanner-corners"></div>
+                <!-- Skaner video maydoni -->
+                <div id="scanner-video-region"></div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Doskadagi yoki do'stingiz ekranidagi QR kodni skaner qiling. Tizim avtomatik PIN kodni aniqlab o'yinga ulaydi!
+            </p>
+
+            <div class="scanner-actions">
+                <input type="file" id="qr-file-input" accept="image/*" style="display: none;">
+                <button id="btn-file-scan" class="btn-neo btn-purple">
+                    📁 Rasm Faylidan O'qish
+                </button>
+                <button id="btn-demo-scan" class="btn-neo btn-gold">
+                    🧪 Demo Skanerlash (Test)
+                </button>
+            </div>
+        </main>
+    </section>
+
+    <!-- 3. PIN KOD VA ISM KIRITISH EKRANI (JOIN SCREEN) -->
+    <section id="join-screen" class="screen">
+        <header class="top-header">
+            <button class="btn-neo btn-red btn-back">⬅ Ortga</button>
+            <div class="brand-logo">
+                <span>🎮 XONAGA KIRISH</span>
+            </div>
+            <div style="width: 80px;"></div>
+        </header>
+
+        <main class="scanner-container" style="max-width: 550px;">
+            <h2>O'yin Ma'lumotlari</h2>
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 1.2rem; margin: 1.5rem 0;">
+                <div>
+                    <label style="display:block; text-align: left; font-weight: 800; margin-bottom: 0.5rem;">GAME PIN:</label>
+                    <input type="text" id="join-pin-input" placeholder="Masalan: 749215" maxlength="8"
+                           style="width: 100%; padding: 1.1rem; font-size: 1.8rem; font-weight: 900; letter-spacing: 3px; text-align: center; border-radius: var(--radius-md); border: 4px solid var(--border-color); background: #0f172a; color: #fff;">
+                </div>
+                <div>
+                    <label style="display:block; text-align: left; font-weight: 800; margin-bottom: 0.5rem;">SIZNING ISMINGIZ:</label>
+                    <input type="text" id="join-name-input" placeholder="Ismingizni kiriting" value="Chempion" maxlength="15"
+                           style="width: 100%; padding: 1rem; font-size: 1.3rem; font-weight: 700; text-align: center; border-radius: var(--radius-md); border: 4px solid var(--border-color); background: #0f172a; color: #fff;">
+                </div>
+            </div>
+
+            <div class="blook-locker-section" style="width: 100%; margin-bottom: 1.5rem;">
+                <h4 style="margin-bottom: 0.8rem;">Blook Tanglang:</h4>
+                <div id="blook-grid-join" class="blook-grid" style="max-height: 180px;"></div>
+            </div>
+
+            <button id="btn-submit-join" class="btn-neo btn-green btn-large" style="width: 100%;">
+                🚀 O'YINNI BOSHLASH
+            </button>
+        </main>
+    </section>
+
+    <!-- 4. HOST (O'YIN TASHKILOTCHISI) EKRANI -->
+    <section id="host-screen" class="screen">
+        <header class="top-header">
+            <button class="btn-neo btn-red btn-back">⬅ Xonani Yopish</button>
+            <div class="brand-logo">
+                <span>👑 HOST XONASI</span>
+            </div>
+            <button id="btn-host-start" class="btn-neo btn-green btn-large">
+                ▶ O'yinni Boshlash!
+            </button>
+        </header>
+
+        <main class="host-layout">
+            <!-- Chap tomonda Katta QR Kod va PIN -->
+            <div class="host-qr-card">
+                <h2>O'yinga Qo'shiling!</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Telefoningiz kamerasi yoki o'yin skaneri bilan skan qiling</p>
+
+                <div class="qr-code-frame">
+                    <div id="host-qr-container"></div>
+                </div>
+
+                <p style="font-weight: 700; font-size: 1.2rem; color: var(--text-muted);">YOKI PIN KODNI KIRITING:</p>
+                <div id="host-pin-display" class="host-pin-large">------</div>
+            </div>
+
+            <!-- O'ng tomonda Kutish Xonasi (Lobby) -->
+            <div class="host-lobby-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>👥 O'yinchilar Ro'yxati</h3>
+                    <span id="host-players-count" class="logo-badge" style="background: var(--primary); color: #fff;">0 ta o'yinchi</span>
+                </div>
+                <div id="host-players-list" class="lobby-players-grid"></div>
+            </div>
+        </main>
+    </section>
+
+    <!-- 5. 3D O'YIN ARENASI (GAME SCREEN) -->
+    <section id="game-screen" class="screen">
+        <!-- 3D Three.js Canvas Container -->
+        <div id="game-canvas-container"></div>
+
+        <!-- O'yin HUD (Yuqori Paneli) -->
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="hud-stat-box" id="hud-gold-box">
+                    <span>💰</span>
+                    <span id="hud-gold">0</span>
+                    <span id="hud-shield" style="display:none;" title="Qalqon faol!">🛡️</span>
+                </div>
+            </div>
+            <div class="hud-center" style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                <div class="hud-timer" id="hud-timer">2:00</div>
+                <button id="btn-game-show-qr" class="btn-neo btn-gold" style="padding: 0.4rem 1rem; font-size: 0.95rem; pointer-events: auto;">
+                    📱 QR Kodni Ko'rsatish
+                </button>
+            </div>
+            <div class="hud-right">
+                <div class="hud-leaderboard">
+                    <h4>🏆 Peshqadamlar</h4>
+                    <div id="hud-leaderboard-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sandiqqa yaqinlashganda chiquvchi tugma -->
+        <div id="interact-prompt">
+            <button id="btn-action-interact" class="btn-neo btn-gold btn-large">
+                🎁 Sandiqni Ochish [E]
+            </button>
+        </div>
+
+        <!-- Mobil Sensor Boshqaruvi -->
+        <div class="mobile-controls">
+            <div class="joystick-zone">
+                <div id="virtual-joystick" class="virtual-joystick">
+                    <div id="joystick-thumb" class="joystick-thumb"></div>
+                </div>
+            </div>
+            <div class="action-buttons-zone">
+                <button id="btn-action-jump" class="btn-neo btn-purple btn-jump-touch">
+                    🦘 Sakrash
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. G'OLIBLAR VA NATIJALAR EKRANI (GAMEOVER SCREEN) -->
+    <section id="gameover-screen" class="screen">
+        <main class="gameover-container">
+            <h1 class="hero-title" style="font-size: 3.5rem;">O'YIN TUGADI!</h1>
+            <p class="hero-subtitle">Barcha ishtirokchilar ajoyib bellashuv ko'rsatishdi!</p>
+
+            <div id="podium-container" class="podium-container"></div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button id="btn-play-again" class="btn-neo btn-primary btn-large">
+                    🔄 Qayta O'ynash
+                </button>
+            </div>
+        </main>
+    </section>
+
+    <!-- ================= MODALLAR ================= -->
+
+    <!-- VIKTORINA SAVOLI MODALI -->
+    <div id="question-modal" class="game-modal-overlay">
+        <div class="modal-content-card">
+            <span id="modal-q-category" class="modal-q-badge">Matematika</span>
+            <h2 id="modal-q-text" class="modal-q-title">Savol bu yerda paydo bo'ladi?</h2>
+            <div id="modal-options-grid" class="modal-options-grid"></div>
+        </div>
+    </div>
+
+    <!-- 3 TA SIRLI SANDIQ MODALI (GOLD QUEST) -->
+    <div id="mystery-chest-modal" class="game-modal-overlay">
+        <div class="modal-content-card">
+            <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--accent-gold);">🎁 TO'G'RI JAVOB!</h2>
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-top: 0.4rem;">
+                Mukofot olish uchun 3 ta sandiqdan birini tanlang:
+            </p>
+
+            <div class="mystery-chests-row">
+                <div class="mystery-chest-card" data-index="0">
+                    <div class="chest-icon-img">📦</div>
+                    <div class="chest-reward-content">❓</div>
+                </div>
+                <div class="mystery-chest-card" data-index="1">
+                    <div class="chest-icon-img">📦</div>
+                    <div class="chest-reward-content">❓</div>
+                </div>
+                <div class="mystery-chest-card" data-index="2">
+                    <div class="chest-icon-img">📦</div>
+                    <div class="chest-reward-content">❓</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- O'Z SAVOLINI QO'SHISH MODALI -->
+    <div id="custom-q-modal" class="game-modal-overlay">
+        <div class="modal-content-card" style="text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3>➕ Yangi Viktorina Savoli Qo'shish</h3>
+                <button id="btn-close-custom-q" class="btn-neo btn-red btn-icon-round">✕</button>
+            </div>
+            <form id="custom-q-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                    <label style="font-weight: 700;">Savol matni:</label>
+                    <input type="text" id="input-q-text" required placeholder="Masalan: 12 × 12 nechiga teng?"
+                           style="width: 100%; padding: 0.8rem; border-radius: var(--radius-sm); border: 3px solid var(--border-color); background: #0f172a; color: #fff;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                    <div>
+                        <label>Variant 1:</label>
+                        <input type="text" id="input-opt-1" required placeholder="Variant A"
+                               style="width: 100%; padding: 0.7rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff;">
+                    </div>
+                    <div>
+                        <label>Variant 2:</label>
+                        <input type="text" id="input-opt-2" required placeholder="Variant B"
+                               style="width: 100%; padding: 0.7rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff;">
+                    </div>
+                    <div>
+                        <label>Variant 3:</label>
+                        <input type="text" id="input-opt-3" required placeholder="Variant C"
+                               style="width: 100%; padding: 0.7rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff;">
+                    </div>
+                    <div>
+                        <label>Variant 4:</label>
+                        <input type="text" id="input-opt-4" required placeholder="Variant D"
+                               style="width: 100%; padding: 0.7rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff;">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                    <div>
+                        <label>To'g'ri javob:</label>
+                        <select id="select-correct-opt"
+                                style="width: 100%; padding: 0.8rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff; font-weight: 700;">
+                            <option value="0">Variant 1</option>
+                            <option value="1">Variant 2</option>
+                            <option value="2">Variant 3</option>
+                            <option value="3">Variant 4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Kategoriya / Fan:</label>
+                        <input type="text" id="input-q-cat" placeholder="Masalan: Matematika"
+                               style="width: 100%; padding: 0.7rem; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: #0f172a; color: #fff;">
+                    </div>
+                </div>
+                <button type="submit" class="btn-neo btn-green btn-large" style="margin-top: 1rem;">
+                    💾 Saqlash va Qo'shish
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- KATTA TEZKOR QR KOD MODALI -->
+    <div id="quick-qr-modal" class="game-modal-overlay">
+        <div class="modal-content-card" style="max-width: 500px; display: flex; flex-direction: column; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 900; color: var(--accent-gold);">📱 O'YIN QR KODI</h3>
+                <button id="btn-close-quick-qr" class="btn-neo btn-red btn-icon-round">✕</button>
+            </div>
+            
+            <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1rem;">
+                Kamerangizni ushbu QR kodga to'g'irlang yoki PIN kod orqali kiring!
+            </p>
+
+            <div class="qr-code-frame" style="padding: 1.2rem; margin: 0.5rem 0;">
+                <div id="modal-qr-container"></div>
+            </div>
+
+            <div style="margin: 1rem 0; font-size: 2.2rem; font-weight: 900; letter-spacing: 3px; color: var(--accent-gold);">
+                PIN: <span id="modal-qr-pin">------</span>
+            </div>
+
+            <div style="display: flex; gap: 0.8rem; width: 100%; margin-top: 0.5rem;">
+                <button id="btn-modal-download-qr" class="btn-neo btn-green" style="flex: 1;">
+                    💾 Rasm Yuklash (PNG)
+                </button>
+                <button id="btn-modal-refresh-qr" class="btn-neo btn-primary" style="flex: 1;">
+                    🔄 Yangi PIN
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="js/sound.js"></script>
+    <script src="js/blooks.js"></script>
+    <script src="js/questions.js"></script>
+    <script src="js/qr-system.js"></script>
+    <script src="js/three-game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

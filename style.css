@@ -1,0 +1,1037 @@
+/* ===================================================
+   BLOOKHIT 3D - ULTRA MODERN NEO-BRUTALIST STYLING
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;800;900&display=swap');
+
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --border-color: #020617;
+    --primary: #06b6d4;
+    --primary-dark: #0891b2;
+    --accent-gold: #f59e0b;
+    --accent-gold-dark: #d97706;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
+    --accent-red: #ef4444;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --shadow-3d: 0 8px 0 rgba(0, 0, 0, 0.45);
+    --shadow-btn: 0 6px 0 var(--border-color);
+    --shadow-btn-active: 0 2px 0 var(--border-color);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fredoka', 'Outfit', sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Fon Dinamik Bezaklari */
+.bg-animated-decor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+}
+
+.floating-blooks-decor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.float-blook {
+    position: absolute;
+    font-size: 3.5rem;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+    animation: floatAnim 6s ease-in-out infinite alternate;
+    opacity: 0.25;
+}
+
+.float-blook.b1 { top: 12%; left: 8%; animation-delay: 0s; }
+.float-blook.b2 { top: 75%; left: 12%; animation-delay: 1.5s; }
+.float-blook.b3 { top: 15%; right: 10%; animation-delay: 0.8s; }
+.float-blook.b4 { top: 80%; right: 15%; animation-delay: 2.2s; }
+.float-blook.b5 { top: 45%; left: 4%; animation-delay: 3s; font-size: 2.5rem; }
+
+@keyframes floatAnim {
+    0% { transform: translateY(0) rotate(-6deg) scale(1); }
+    100% { transform: translateY(-30px) rotate(8deg) scale(1.08); }
+}
+
+/* ================= SCREEN SYSTEM ================= */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    z-index: 10;
+    overflow-y: auto;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ================= HEADER / TOPBAR ================= */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    z-index: 20;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 3px 3px 0 var(--border-color);
+}
+
+.brand-logo .logo-badge {
+    background: var(--accent-gold);
+    color: #000;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 4px 0 var(--border-color);
+}
+
+/* ================= NEO-BRUTALIST BUTTONS ================= */
+.btn-neo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.9rem 1.8rem;
+    border-radius: var(--radius-md);
+    border: 4px solid var(--border-color);
+    cursor: pointer;
+    box-shadow: var(--shadow-btn);
+    transition: all 0.15s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-neo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 var(--border-color);
+}
+
+.btn-neo:active {
+    transform: translateY(4px);
+    box-shadow: var(--shadow-btn-active);
+}
+
+.btn-primary { background: var(--primary); }
+.btn-gold { background: var(--accent-gold); color: #000; }
+.btn-green { background: var(--accent-green); }
+.btn-purple { background: var(--accent-purple); }
+.btn-red { background: var(--accent-red); }
+
+.btn-large {
+    font-size: 1.4rem;
+    padding: 1.2rem 2.4rem;
+    border-radius: var(--radius-lg);
+}
+
+.btn-icon-round {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 1.4rem;
+}
+
+/* ================= ASOSIY SAHIFA (HOME) ================= */
+.home-hero-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.hero-title-box {
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-shadow: 4px 4px 0 #000;
+    background: linear-gradient(135deg, #38bdf8 0%, #facc15 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.35rem;
+    color: var(--text-muted);
+}
+
+/* Asosiy amallar bloklari (Kartochkalar) */
+.hero-action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.action-card {
+    background: var(--bg-card);
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-3d);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+}
+
+.action-icon {
+    font-size: 3.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.action-card p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* ================= BLOOK SELECTION (LOCKER) ================= */
+.blook-locker-section {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-3d);
+}
+
+.locker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.locker-header h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.blook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.blook-select-card {
+    background: #0f172a;
+    border: 3px solid #334155;
+    border-radius: var(--radius-md);
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 0 #000;
+}
+
+.blook-select-card:hover {
+    transform: translateY(-4px) scale(1.04);
+}
+
+.blook-select-card.selected {
+    border-width: 4px;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.6), 0 5px 0 #000;
+    transform: scale(1.05);
+}
+
+.blook-avatar-preview {
+    width: 65px;
+    height: 65px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #000;
+}
+
+.blook-emoji {
+    font-size: 2.2rem;
+}
+
+.blook-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.blook-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+.blook-rarity {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.blook-rarity.chroma { background: #f59e0b; color: #000; }
+.blook-rarity.legendary { background: #06b6d4; color: #000; }
+.blook-rarity.epic { background: #8b5cf6; color: #fff; }
+.blook-rarity.rare { background: #3b82f6; color: #fff; }
+.blook-rarity.uncommon { background: #10b981; color: #000; }
+.blook-rarity.common { background: #64748b; color: #fff; }
+
+/* ================= QR SKANER EKRANI ================= */
+.scanner-container {
+    max-width: 650px;
+    width: 100%;
+    margin: 2rem auto;
+    background: var(--bg-card);
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-3d);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.scanner-box {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 1.5rem 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 4px solid var(--primary);
+    background: #000;
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+}
+
+#scanner-video-region {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Skaner Lazeri animatsiyasi */
+.scanner-laser {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #00ffff, #38bdf8, transparent);
+    box-shadow: 0 0 12px #00ffff;
+    animation: scanLaser 2s linear infinite alternate;
+    z-index: 5;
+}
+
+@keyframes scanLaser {
+    0% { top: 5%; }
+    100% { top: 92%; }
+}
+
+.scanner-corners {
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    border: 3px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    z-index: 4;
+}
+
+.scanner-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* ================= HOST (XONA OCHISH) EKRANI ================= */
+.host-layout {
+    display: flex;
+    flex: 1;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.host-qr-card {
+    flex: 1;
+    background: var(--bg-card);
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-3d);
+    text-align: center;
+}
+
+.host-pin-large {
+    font-size: 3.8rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+    text-shadow: 3px 3px 0 #000;
+    margin: 1rem 0;
+}
+
+.qr-code-frame {
+    background: #fff;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    border: 4px solid var(--border-color);
+    box-shadow: 0 6px 0 var(--border-color);
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.host-lobby-card {
+    flex: 1;
+    background: var(--bg-card);
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-3d);
+}
+
+.lobby-players-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    overflow-y: auto;
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+}
+
+.lobby-player-badge {
+    background: #0f172a;
+    border: 3px solid #334155;
+    border-radius: var(--radius-md);
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 0 #000;
+    animation: popIn 0.3s ease;
+}
+
+.lobby-player-badge .player-emoji {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid #000;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ================= 3D GAME HUD & CANVAS ================= */
+#game-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* O'yin ustki paneli (HUD) */
+.game-hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.hud-left, .hud-center, .hud-right {
+    pointer-events: auto;
+}
+
+.hud-stat-box {
+    background: rgba(15, 23, 42, 0.9);
+    border: 3px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.8rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    box-shadow: 0 5px 0 var(--border-color);
+    color: var(--accent-gold);
+}
+
+.hud-stat-box.pulse {
+    transform: scale(1.15);
+    color: #facc15;
+}
+
+.hud-timer {
+    background: rgba(15, 23, 42, 0.9);
+    border: 3px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.8rem 1.8rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #38bdf8;
+    box-shadow: 0 5px 0 var(--border-color);
+}
+
+.hud-leaderboard {
+    background: rgba(15, 23, 42, 0.9);
+    border: 3px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    min-width: 220px;
+    box-shadow: 0 5px 0 var(--border-color);
+}
+
+.hud-leaderboard h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    border-bottom: 2px solid #334155;
+    padding-bottom: 0.3rem;
+}
+
+.lb-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.3rem 0;
+}
+
+.lb-item.is-me {
+    color: var(--accent-gold);
+}
+
+/* O'yinchi harakati va Sandiq interaktiv tugmasi */
+#interact-prompt {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 25;
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translate(-50%, 0); }
+    100% { transform: translate(-50%, -10px); }
+}
+
+/* Mobil Boshqaruv Joystigi */
+.mobile-controls {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 2rem;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.joystick-zone, .action-buttons-zone {
+    pointer-events: auto;
+}
+
+.virtual-joystick {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.6);
+    border: 4px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    touch-action: none;
+}
+
+.joystick-thumb {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    pointer-events: none;
+}
+
+.btn-jump-touch {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
+
+/* ================= MODALLAR (SAVOLLAR VA SIRLI SANDIQLAR) ================= */
+.game-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.game-modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content-card {
+    background: var(--bg-card);
+    border: 5px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: var(--shadow-3d);
+    text-align: center;
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+}
+
+.modal-q-badge {
+    display: inline-block;
+    background: var(--accent-purple);
+    color: #fff;
+    font-weight: 800;
+    padding: 0.4rem 1.2rem;
+    border-radius: var(--radius-sm);
+    border: 3px solid var(--border-color);
+    margin-bottom: 1.2rem;
+}
+
+.modal-q-title {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+}
+
+.modal-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.quiz-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: var(--shadow-btn);
+    color: #fff;
+    transition: all 0.15s ease;
+    text-align: left;
+}
+
+.quiz-option-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 var(--border-color);
+}
+
+.quiz-option-btn:active {
+    transform: translateY(3px);
+    box-shadow: var(--shadow-btn-active);
+}
+
+.quiz-option-btn .opt-num {
+    background: rgba(0, 0, 0, 0.3);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.quiz-option-btn.correct {
+    background: var(--accent-green) !important;
+    animation: pulseCorrect 0.4s;
+}
+
+.quiz-option-btn.wrong {
+    background: var(--accent-red) !important;
+    animation: shakeWrong 0.4s;
+}
+
+@keyframes shakeWrong {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* ================= 3 TA SIRLI SANDIQ MODALI (GOLD QUEST) ================= */
+.mystery-chests-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.mystery-chest-card {
+    background: #0f172a;
+    border: 4px solid var(--border-color);
+    border-radius: var(--radius-md);
+    width: 170px;
+    height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-btn);
+    transition: all 0.2s ease;
+}
+
+.mystery-chest-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    border-color: var(--accent-gold);
+}
+
+.chest-icon-img {
+    font-size: 4.5rem;
+    animation: wobble 2s infinite ease-in-out;
+}
+
+@keyframes wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.mystery-chest-card.opened {
+    background: var(--accent-gold);
+    color: #000;
+    transform: scale(1.1);
+    border-color: #fff;
+}
+
+.chest-reward-content {
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* ================= G'OLIBLAR PODIUMI (GAMEOVER) ================= */
+.gameover-container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+    padding: 2rem;
+}
+
+.podium-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    height: 320px;
+}
+
+.podium-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+}
+
+.podium-blook {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 1.5s infinite alternate;
+}
+
+.podium-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.podium-gold {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+}
+
+.podium-bar {
+    width: 100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border: 4px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.podium-step.step-1 .podium-bar {
+    height: 180px;
+    background: var(--accent-gold);
+    color: #000;
+}
+
+.podium-step.step-2 .podium-bar {
+    height: 130px;
+    background: #94a3b8;
+    color: #000;
+}
+
+.podium-step.step-3 .podium-bar {
+    height: 90px;
+    background: #b45309;
+}
+
+.crown {
+    font-size: 3rem;
+    animation: floatAnim 2s infinite alternate;
+}
+
+/* ================= TEZKOR QR KOD BANNERI ================= */
+.home-qr-banner-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+    border: 4px solid var(--accent-gold);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2), var(--shadow-3d);
+}
+
+.qr-banner-left {
+    flex: 1;
+    text-align: left;
+}
+
+.qr-badge {
+    background: var(--accent-gold);
+    color: #000;
+    font-size: 0.85rem;
+    font-weight: 900;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    border: 2px solid #000;
+}
+
+.qr-banner-left h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.qr-banner-left p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin-bottom: 1rem;
+}
+
+.qr-banner-pin-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #0f172a;
+    border: 3px solid #334155;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-md);
+    width: fit-content;
+}
+
+.qr-banner-pin-box span {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.qr-banner-pin-box strong {
+    font-size: 2rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+}
+
+.qr-banner-right {
+    flex-shrink: 0;
+}
+
+/* ================= RESPONSIVE DIZAYN ================= */
+@media (max-width: 768px) {
+    .top-header { padding: 1rem 1.2rem; }
+    .hero-title { font-size: 2.6rem; }
+    .hero-action-cards { grid-template-columns: 1fr; }
+    .home-qr-banner-card { flex-direction: column; text-align: center; padding: 1.5rem; }
+    .qr-banner-left { text-align: center; }
+    .qr-banner-pin-box { margin: 0 auto; }
+    .host-layout { flex-direction: column; padding: 1rem; }
+    .modal-options-grid { grid-template-columns: 1fr; }
+    .podium-container { gap: 0.5rem; }
+    .podium-step { width: 100px; }
+    .podium-blook { font-size: 2.5rem; }
+    .podium-name { font-size: 0.9rem; }
+    .podium-bar { font-size: 1.8rem; }
+}
